@@ -4,7 +4,7 @@ from pgmpy.estimators import BayesianEstimator
 from pgmpy.inference import VariableElimination
 from pgmpy.models import BayesianModel, MarkovModel
 import itertools
-from causality.hello import draw_network
+from causality.graph import draw_network
 
 pd.set_option('display.max_columns', None)
 
@@ -26,32 +26,21 @@ edges = []
 connect(dep_df, 'myproximus-usage', edges)
 edges = [(t[1], t[0]) for t in edges]
 
-# nodes = dep_df.iloc[:, 1].tolist()
 nodes = set(itertools.chain.from_iterable(edges))
 nodes_df = dep_df.iloc[:, 1].to_frame()
 nodes_df = nodes_df[nodes_df['Column2'].isin(nodes)]
 
-# for row in df.iterrows():
-#     x = row[1]
-#     origin = x.iloc[1]
-#     for col in x.iloc[3:12]:
-#
-#         if col != 0:
-#             target = df[df.iloc[:, 0] == col].iloc[0, 1]
-#             edges.append((origin, target))
-
-
-nodes_df['0'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['1'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['2'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['3'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['4'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['5'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['6'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['7'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['8'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['9'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
-nodes_df['10'] = pd.DataFrame(data= np.random.randint(0, 2, size=64).T)
+nodes_df['0'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['1'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['2'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['3'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['4'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['5'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['6'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['7'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['8'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['9'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
+nodes_df['10'] = pd.DataFrame(data=np.random.randint(0, 2, size=64).T)
 nodes_df = nodes_df.set_index('Column2').transpose()
 
 model = BayesianModel()

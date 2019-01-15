@@ -1,5 +1,58 @@
+$(document).ready(function() {
+    var sidenav = document.getElementById("sidenav");
+    $.getJSON("/nodes", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            var node = data[i];
 
-d3.json("peepo.json", function(error, json) {
+            var div = document.createElement("div");
+            var label = document.createElement("label");
+            label.setAttribute("class", "switch");
+            label.setAttribute("id", node);
+            var input = document.createElement("input")
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("class", "nodeinput")
+            input.setAttribute("value", node)
+            label.appendChild(input);
+            var span = document.createElement("span")
+            span.setAttribute("class", "slider round");
+            label.appendChild(span);
+            div.textContent = node
+            div.setAttribute("class", "node");
+            var linebreak = document.createElement("br");
+            div.appendChild(linebreak);
+            div.appendChild(label);
+
+            sidenav.appendChild(div);
+        }
+    });
+});
+
+function inference() {
+    var inputs = $('.nodeinput:checked').map(function() {
+        return this.value;
+    }).get();
+
+    $.ajax({
+      type: "POST",
+      url: "/inference",
+      data: JSON.stringify(inputs),
+      success: location.reload(),
+      headers: { 'Content-Type': 'application/json' },
+      dataType: "json"
+    });
+}
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+
+d3.json("static/network.json?" + guid(), function(error, json) {
     var w = 1200,
         h = 800;
 
